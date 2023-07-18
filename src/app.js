@@ -11,14 +11,14 @@ const app = () => {
     const LASER_EXPLODE_DUR = 0.1; // duration of the laser's explosion in seconds
     const LASER_MAX = 10; // Maximum number of lasers on screen at once
     const LASER_SPEED = 500; // Speed of lasers in pixels per second
-    const ROIDS_NUM = 3; // Starting number of astroids
-    const ROIDS_JAG = 0.4; // Jaggedness of the astroids (0 = non, 1 = lots)
-    const ROID_PTS_LGE = 20; // Points scored for a large astroid
-    const ROID_PTS_MED = 50; // Points scored for a medium astroid
-    const ROID_PTS_SML = 100; // Points scored for a small astroid
-    const ROID_SIZE = 100; // Starting size of astroids in pixels
-    const ROID_SPD = 50; // Max starting speed of astroids in peixel per second
-    const ROIDS_VERT = 10; // Average number of vertices on each astroid
+    const ROIDS_NUM = 3; // Starting number of asteroids
+    const ROIDS_JAG = 0.4; // Jaggedness of the asteroids (0 = non, 1 = lots)
+    const ROID_PTS_LGE = 20; // Points scored for a large asteroid
+    const ROID_PTS_MED = 50; // Points scored for a medium asteroid
+    const ROID_PTS_SML = 100; // Points scored for a small asteroid
+    const ROID_SIZE = 100; // Starting size of asteroids in pixels
+    const ROID_SPD = 50; // Max starting speed of asteroids in peixel per second
+    const ROIDS_VERT = 10; // Average number of vertices on each asteroid
     const SAVE_KEY_SCORE = "highscore"; // Save key for local storage of high score
     const SHIP_BLINK_DUR = 0.1; // duration of the ship's blink during invisibility in seconds
     const SHIP_EXPLODE_DUR = 0.3; // duration of the ship's explosion
@@ -65,7 +65,7 @@ const app = () => {
     // SetUp the game loop
     setInterval(update, 1000 / FPS);
     
-    // Create astroid belt
+    // Create asteroid belt
     function createAstroidBelt() {
         roids = [];
         roidsTotal = (ROIDS_NUM + level) * 7;
@@ -87,7 +87,7 @@ const app = () => {
         let y = roids[index].y;
         let r = roids[index].r;
 
-        // split the large astroid in two if necessary
+        // split the large asteroid in two if necessary
         if(r == Math.ceil(ROID_SIZE / 2)) {
             roids.push(newAstroid(x, y, Math.ceil(ROID_SIZE / 4)));
             roids.push(newAstroid(x, y, Math.ceil(ROID_SIZE / 4)));
@@ -107,10 +107,10 @@ const app = () => {
             localStorage.setItem(SAVE_KEY_SCORE, scoreHigh);
         }
         
-        // Destroy the astroid
+        // Destroy the asteroid
         roids.splice(index, 1);
         
-        // New level when no astroids
+        // New level when no asteroids
         if(roids.length == 0) {
             level++;
             newLevel();
@@ -118,7 +118,7 @@ const app = () => {
         
         fxHit.play();
 
-        // Create the ratio of remaining astroids to determine music tempo
+        // Create the ratio of remaining asteroids to determine music tempo
         roidsLeft--;
         music.setAstroidRatio(roidsLeft == 0 ? 1 : roidsLeft / roidsTotal);
     }
@@ -483,7 +483,7 @@ const app = () => {
         ctx.font = (TEXT_SIZE * 0.8) + "px dejavu sans mono";
         ctx.fillText("High Score: " + scoreHigh, canvas.width / 2, SHIP_SIZE);
 
-        // Detect laser hits on astroids
+        // Detect laser hits on asteroids
         let ax, ay, ar, lx, ly;
         for(let i = roids.length - 1; i >= 0; i--) {
             // Grab the astroid properties
@@ -507,10 +507,10 @@ const app = () => {
             }
         }
         
-        // Draw the astroids
+        // Draw the asteroids
         let x, y, r, a, vert, offs;
         for(let i = 0; i < roids.length; i++) {
-            // Get the astroid properties
+            // Get the asteroid properties
             ctx.strokeStyle = "slategrey";
             ctx.lineWidth = SHIP_SIZE / 20;
             x = roids[i].x;
@@ -537,7 +537,7 @@ const app = () => {
             ctx.closePath();
             ctx.stroke();
         
-            // Show astroids collision circle
+            // Show asteroids collision circle
             if(SHOW_BOUNDING) {
                 ctx.strokeStyle = "lime";
                 ctx.beginPath();
@@ -546,7 +546,7 @@ const app = () => {
             }
         }
         
-        // Check for astroid collisions (when not exploding)
+        // Check for asteroid collisions (when not exploding)
         if(!exploding) {
             // Only check when not blinking
             if(ship.blinkNumber == 0 && !ship.dead) {
@@ -631,7 +631,7 @@ const app = () => {
             }
         }
         
-        // Move the astroids
+        // Move the asteroids
         for(let i = 0; i < roids.length; i++) {
             roids[i].x += roids[i].xv;
             roids[i].y += roids[i].yv;
